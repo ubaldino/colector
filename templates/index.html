@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Index{% endblock %}
+
+{% block head %}
+	{{ parent() }}
+	<style type="text/css">
+		.important { color: #336699; }
+	</style>
+{% endblock %}
+{% block content %}
+	<section class="pn_arrastrar">
+		<span>Arrastre un archivo o presione aqui..</span>
+		<input type="file" name='archivo' title="Arrastre un archivo o presione aqui..">
+	</section>
+	<section class='pn_archivos'>
+		<aside>
+			<a href="/colector/salir">Salir</a>
+			<ul id='lista_archivos'></ul>
+		</aside>
+		<article>
+			<pre><code id='texto_archivo' ></code></pre>
+		</article>
+	</section>
+{% endblock %}
+
+{% block libs %}
+	{{ parent() }}
+	<script src="public/js/prism.js"></script>
+{% endblock %}

@@ -1,0 +1,191 @@
+@import 'jeet'
+@import 'nib'
+@import 'nib/gradients'
+
+global-reset()
+
+select-style( width=30% )
+	appearance none
+	font-family: Droid Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
+	margin-top: 1%
+	margin-bottom: 3%
+	width: width;
+	padding: 5px;
+	font-size: 16px;
+	line-height: 1;
+	border: 0;
+	border-radius: 5px;
+	height: 34px;
+	font-weight: bold
+	color: rgba(222, 224, 229, 1)
+	background: url('../img/bg_arrow.svg') no-repeat 96% rgba(0, 2, 40, .9)
+
+h1
+	h1()
+	
+body
+	header
+		center( 100% )
+		background: url('../img/pat-dots.png') 0 0 repeat;
+		padding 0.3%
+		padding-left 3%
+		border-bottom: 1px solid #000
+		img
+			col( 2/12 , gutter: 1 , cycle: 2 )
+		article.title
+			col( 10/12 , gutter: 1 , cycle: 2 )
+			h1
+				h1()
+				margin-left 10%
+			
+	section
+		center( 100% )
+		margin-top 1%
+		section.pn_arrastrar
+			center( 99% )
+			height: 3em;
+			border: 2px dashed rgba(0,0,0,.2);
+			border-radius: .4em;
+			font-family: Arial;
+			text-align: center;
+			line-height: 0px;
+			font-size: 20px;
+			color: rgba(0,0,0,1);
+			margin-bottom 1%
+			background: url('../img/pat-dots.png') 0 0 repeat
+			z-index 1
+			span
+				position relative
+				top 1.5em
+			input
+				position: relative
+				text-align center
+				opacity 0
+				filtearlpha(opacity: 0)
+				z-index 5
+				min-height 4.5em
+				min-width 100%
+				left 0em
+				right 0em
+				bottom 0em
+				border-radius: 0.1em;
+		section.pn_archivos
+			center(99%)
+			aside
+				col( 2/10 , gutter: 0.1 , cycle: 2 )
+				a
+					padding 2em
+					button()
+				ul
+					li
+						background rgba(3, 32, 59, .1)
+						padding: .3em 1em
+						margin-bottom .2em
+						cursor: pointer
+			article
+				col( 8/10 , gutter: 0.1 , cycle: 2 )
+				div.panel
+					center( 97% )
+					#btn_action
+						button: rgba(34, 111, 67, .75) 'large'
+						float right
+					#pn_export
+						color black
+						select
+							select-style( 40% )
+					#pn_import
+						display none
+						select
+							select-style( 40% )
+						#course_options
+							center(100%)
+							padding 2em 5em
+							.rename_course
+								col(1/5, gutter: 0.1 ,cycle:2)
+								width: 80px;
+								height: 26px;
+								background: #333;
+								margin: 0   ;
+								border-radius: .4em;
+								position: relative;
+								box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+
+								&:after
+									content: 'NO';
+									font: 12px/26px Arial, sans-serif;
+									color: #000;
+									position: absolute;
+									right: 10px;
+									z-index: 0;
+									font-weight: bold;
+									text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+
+								&:before
+									content: 'YES';
+									font: 12px/26px Arial, sans-serif;
+									color: #00bf00;
+									position: absolute;
+									left: 10px;
+									z-index: 0;
+									font-weight: bold;
+
+								label
+									display: block;
+									width: 34px;
+									height: 20px;
+									border-radius: .4em;
+									transition: all .4s ease;
+									cursor: pointer;
+									position: absolute;
+									top: 3px;
+									left: 3px;
+									z-index: 1;
+									box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+									background: #fcfff4;
+									background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+									//filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
+								input[type=checkbox]
+									display none
+									
+								input[type=checkbox]:checked + label
+									left: 43px;
+							h2
+								col(4/5, gutter: 0 , cycle: 2)
+								h5()
+								margin-left 5%
+								margin-top .3%
+
+						#course_data_modify
+							center( 95% )
+							margin-top 1%
+							padding 2em 5em
+							display: none
+							label
+								label: block
+								display: table
+							input
+								field()
+								input()
+								text-align center
+								font-size: 1.2em
+								padding: .2em .1em
+						#pn_logs
+							center(98%)
+							clear: both
+							margin-top 1%
+				+below( 800px )
+					stack()
+					margin-top 2%
+					div.panel
+						#pn_import
+							.dropzone
+								span
+									font-size: 0.65em
+									font-weight bold
+									top 2em
+								input
+									bottom 3.31em
+		section.pn_ingresar
+			center( 15% )
+			text-align center
+			
