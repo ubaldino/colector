@@ -56,7 +56,10 @@ $app->get('/colector/archivos', function () use ($app) {
 	if ( $archivos = opendir( MEDIA_DIR ) ) {
 		while (false !== ($archivo = readdir($archivos))) {
 			if ($archivo != "." && $archivo != ".."){
-				$tipo = mime_content_type( MEDIA_DIR . DS . $archivo );
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				$tipo = finfo_file( $finfo , MEDIA_DIR . DS . $archivo );
+				finfo_close( $finfo );
+				//$tipo = mime_content_type( MEDIA_DIR . DS . $archivo );
 				$_archivo = new stdClass;
 				$_archivo->nombre = $archivo;
 				$_archivo->tipo = $tipo;
