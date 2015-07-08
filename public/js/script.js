@@ -61,16 +61,15 @@ $( document ).ready( function() {
 
 	mostrar_archivo = function( target ){
 
-		//'text/plain;
-
+		document.querySelector("#btn_descargar").dataset.archivo = target.innerText;
+		$( "#btn_descargar" ).show();
+		
 		$.ajax({
 			url: media_url+"/"+target.innerText,
 			type: 'GET',
 			dataType: 'text',
 		})
 		.done(function( data ) {
-			document.querySelector("#btn_descargar").dataset.archivo = target.innerText;
-			$( "#btn_descargar" ).show();
 			$("code#texto_archivo").empty();
 			$("code#texto_archivo").removeClass();
 			$("code#texto_archivo").append( data ); 
