@@ -76,8 +76,9 @@ $( document ).ready( function() {
 			$("code#texto_archivo").append( data ); 
 
 			if ( target.dataset.tipo == 'plain' || target.dataset.tipo == null ) {
-				tipo_archivo = '';
-				tipo_archivo = target.innerText.match(/\.(\w+)$/)[1];
+				_tipo_archivo = target.innerText.match(/\.(\w+)$/);
+				tipo_archivo = ( _tipo_archivo != null ) ? _tipo_archivo[1] : '' ;
+				
 				console.log( tipo_archivo );
 				
 				switch( tipo_archivo ){
