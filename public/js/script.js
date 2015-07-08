@@ -6,9 +6,7 @@ $( document ).ready( function() {
 	media_url = document.location.href+'public/media';
 
 
-
 	// CONSTRUCCION DE FUNCIONES
-
 	listar_archivos = function(){
 		contenedor = $( "#lista_archivos" );
 		contenedor.empty();
@@ -71,13 +69,16 @@ $( document ).ready( function() {
 			dataType: 'text',
 		})
 		.done(function( data ) {
+			document.querySelector("#btn_descargar").dataset.archivo = target.innerText;
+			$( "#btn_descargar" ).show();
 			$("code#texto_archivo").empty();
 			$("code#texto_archivo").removeClass();
 			$("code#texto_archivo").append( data ); 
 
-			console.log( target.dataset.tipo );
-			if ( target.dataset.tipo == 'plain') {
+			if ( target.dataset.tipo == 'plain' || target.dataset.tipo == null ) {
+				tipo_archivo = '';
 				tipo_archivo = target.innerText.match(/\.(\w+)$/)[1];
+				console.log( tipo_archivo );
 				
 				switch( tipo_archivo ){
 					case 'js':
@@ -104,8 +105,6 @@ $( document ).ready( function() {
 			}
 
 			Prism.highlightElement( $("code#texto_archivo")[0] );
-
-
 		})
 		.fail(function() {
 			console.log("error");
@@ -114,6 +113,9 @@ $( document ).ready( function() {
 			console.log("complete");
 		});
 		
+		descargar_archivo = function( archivo ){
+			document.location.href = '/colector/archivos/descargar/' + archivo;
+		}
 
 
 		/*
@@ -175,11 +177,6 @@ $( document ).ready( function() {
 		 */
 	}
 
-	listar_archivos();
-
-
-
-	
 	// MANEJO DE EVENTOS
 	$( "input[name='archivo']" ).bind( 'change', function(evt) {
 		if ( archivo.files.length  > 0) {
@@ -193,5 +190,13 @@ $( document ).ready( function() {
 
 	});
 
+	$( "#btn_descargar" ).bind( 'click' , function(event) {
+		descargar_archivo( event.target.dataset.archivo );
+	});
 
+	listar_archivos();
+	
+	if ( document.querySelector("pre").textContent.length == 0 ) {
+		$( "#btn_descargar" ).hide();
+	}
 });
