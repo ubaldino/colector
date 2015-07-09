@@ -86,7 +86,16 @@ $app->post('/colector/archivos', function () use ($app) {
 	return;
 });
 
-$app->get('/colector/archivos/descargar/:nombre', function ( $nombre ) use ($app) {
+
+$app->get('/colector/archivos/ultimo', function () use ($app) {
+	echo "GET: hola dani cabero";
+});
+
+$app->post('/colector/archivos/ultimo', function () use ($app) {
+	echo "POST: hola dani cabero";
+});
+
+$app->get( '/colector/archivos/descargar/:nombre', function ( $nombre ) use ($app) {
 
 	$file = MEDIA_DIR . DS . "{$nombre}"; //file location 
 	header( 'Content-Type: application/octet-stream' );
