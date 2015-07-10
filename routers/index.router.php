@@ -5,6 +5,9 @@
 	curl -LF "archivo=@path_al_file_a_subir" localhost/colector/archivos
 */
 
+use lib\Core;
+
+
 $app->add(new Slim\Middleware\SessionCookie());
 
 define( 'DS' , DIRECTORY_SEPARATOR );
@@ -80,19 +83,47 @@ $app->post('/colector/archivos', function () use ($app) {
 	if ( isset( $_FILES["archivo"] ) ) {
 		$tmp_name = $_FILES["archivo"]["tmp_name"];
 		$nombre = $_FILES["archivo"]["name"];
-		echo $nombre;
 		move_uploaded_file($tmp_name , MEDIA_DIR .DS ."{$nombre}");
+
+		$coredb = Core::getInstance();
+		try{
+			$query =  "INSERT INTO archivos ( nombre , ruta ) VALUES ( '{$nombre}' , '".MEDIA_DIR . DS."{$nombre}' )";
+			$stmt = $coredb->dbh->exec( $query );
+		}
+		catch(PDOException $e) {echo $e->getMessage();}
 	}
 	return;
 });
 
 
 $app->get('/colector/archivos/ultimo', function () use ($app) {
-	echo "GET: hola dani cabero";
+	$coredb = Core::getInstance();
+	$query =  "SELECT * from archivos ORDER BY id DESC LIMIT 1";
+	$r = array();		
+
+	$stmt = $coredb->dbh->prepare( $query );
+
+	$r = ( $stmt->execute() ) ? $stmt->fetchAll(PDO::FETCH_ASSOC) : 0 ;
+
+	if ( count( $r ) > 0) {
+		header("Content-Type: text/plain");
+		echo nl2br( file_get_contents( $r[0]['ruta'] ) );
+	}
 });
 
 $app->post('/colector/archivos/ultimo', function () use ($app) {
-	echo "POST: hola dani cabero";
+	$coredb = Core::getInstance();
+	$query =  "SELECT * from archivos ORDER BY id DESC LIMIT 1";
+	$r = array();		
+
+	$stmt = $coredb->dbh->prepare( $query );
+
+	$r = ( $stmt->execute() ) ? $stmt->fetchAll(PDO::FETCH_ASSOC) : 0 ;
+
+	if ( count( $r ) > 0) {
+		header("Content-Type: text/plain");
+		echo nl2br( file_get_contents( $r[0]['ruta'] ) );
+	}
 });
 
 $app->get( '/colector/archivos/descargar/:nombre', function ( $nombre ) use ($app) {
@@ -105,3 +136,39 @@ $app->get( '/colector/archivos/descargar/:nombre', function ( $nombre ) use ($ap
 });
 
 
+$app->get( '/colector/test', function ( ) use ($app) {
+	$coredb = Core::getInstance();
+	$query =  "SELECT * from archivos ORDER BY id DESC LIMIT 1";
+	$r = array();		
+
+	$stmt = $coredb->dbh->prepare( $query );
+
+	$r = ( $stmt->execute() ) ? $stmt->fetchAll(PDO::FETCH_ASSOC) : 0 ;
+
+	if ( count( $r ) > 0) {
+		header("Content-Type: text/plain");
+		echo nl2br( file_get_contents( $r[0]['ruta'] ) );
+	}
+
+
+});
+
+
+$app->get( '/colector/db', function ( ) use ($app) {
+		$coredb = Core::getInstance();
+		try{
+			// DROP TABLE IF EXISTS archivos ;
+			$query =  "
+					CREATE TABLE IF NOT EXISTS archivos(
+							id INTEGER PRIMARY KEY AUTOINCREMENT,
+							nombre TEXT,
+							hash TEXT,
+							ruta TEXT,
+							created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+							updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+					);
+			";
+			$stmt = $coredb->dbh->exec( $query );
+		}
+		catch(PDOException $e) {echo $e->getMessage();}
+});
